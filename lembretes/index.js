@@ -16,6 +16,8 @@ const lembretes = {};
 //esse contador vai receber o ID dos lembretes
 contador = 0;
 
+const axios = require("axios");
+
 //rota GET para o caminho /lembretes - quando alguem vai fazer uma requisição, vai para esse caminho
 app.get('/lembretes', (req, res) => {
     //envia todo o objeto lembretes como resposta
@@ -23,16 +25,29 @@ app.get('/lembretes', (req, res) => {
 });
 
 //rota PUT para o caminho /lembretes
-app.put('/lembretes', (req, res) =>{
-    contador ++;
-    //extraindo a propriedade 'texto' do corpo do JSON
-    const { texto } = req.body;
-    //adicionando um novo lembrete, usando um ID e colocando contador, texto no lembrete
-    lembretes [contador] = {
-        contador, texto //texto é o corpo do JSON 
-    }
-    //é o status de resposta 201, que é 'created', diz que foi criado com sucesso
-    res.status(201).send(lembretes[contador]);
+app.put("/lembretes", async (req, res) => {
+  contador++;
+  //extraindo a propriedade 'texto' do corpo do JSON
+  const { texto } = req.body;
+  //adicionando um novo lembrete, usando um ID e colocando contador, texto no lembrete
+  lembretes[contador] = {
+    contador,
+    texto, //texto é o corpo do JSON
+  };
+  await axios.post("http://localhost:10000/eventos", {
+     tipo: "LembreteCriado",
+    dados: {
+     contador,
+     texto,
+    },
+  });
+  //é o status de resposta 201, que é 'created', diz que foi criado com sucesso
+  res.status(201).send(lembretes[contador]);
+});
+
+app.post("/eventos", (req, res) => {
+  console.log(req.body);
+  res.status(200).send({ msg: "ok" });
 });
 
 //inicia o servidor fazendo o mesmo ficar escutando (procurando) por requisições na porta 4000

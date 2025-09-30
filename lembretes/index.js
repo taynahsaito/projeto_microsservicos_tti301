@@ -1,14 +1,11 @@
 //importando o módulo 'express', que é tipo um framework para criar servidores web em Nodejs
 const express = require('express');
 
-//importando o módulo 'body-parser', que é uma biblioteca para processar dados enviados no corpo da requisição HTTP
-const bodyParser = require('body-parser');
-
 //criando uma instância do aplicativo express, a partir desse 'app' que configuramos rotas e middleware posteriormente
 const app = express()
 
 //configurando para processar os 'corpos' de requisições no formato JSON, ou seja, permite receber JSON
-app.use(bodyParser.json());
+app.use(express.json());
 
 //criando um objeto vazio chamado lembretes que será o banco de dados temporário
 const lembretes = {}; 
@@ -25,7 +22,7 @@ app.get('/lembretes', (req, res) => {
 });
 
 //rota PUT para o caminho /lembretes
-app.put("/lembretes", async (req, res) => {
+app.post("/lembretes", async (req, res) => {
   contador++;
   //extraindo a propriedade 'texto' do corpo do JSON
   const { texto } = req.body;

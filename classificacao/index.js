@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express();
 app.use(express.json());
+const axios = require("axios");
 
 const palavraChave = "importante";
 const funcoes = {
@@ -24,5 +25,3 @@ app.post('/eventos', (req, res) => {
 
 app.listen(7000, () => console.log("Classificação. Porta 7000"))
 
-
-//

@@ -1,0 +1,13 @@
+apiVersion: v1 #sera usado para criar objeto a partir de uma coleção padrão do kubernetes
+kind: Pod #tipo do objeto que quero criar
+metadata: #dados do meu objeto
+    name: lembretes
+spec:  #descriçao do estado que o objeto tem que ter
+    containers:
+        - name: lembretes
+          image: rodbossini/lembretes:0.0.1
+          resources:
+              limits:
+                  memory: 256Mi
+                  cpu: 1
+

@@ -42,7 +42,10 @@ const funcoes = {
         baseConsulta[observacao.lembreteId]["observacoes"] = observacoes;
     },
     ObservacaoAtualizada: (observacao) => {
+        //pegando apenas a propriedade observacoes do lembrete  
         const observacoes = baseConsulta[observacao.lembreteId]["observacoes"];
+        //queremos achar seu indice para poder substituir a observação por completo 
+        //o id da observação que dar true na comparação entre parenteses, será a observação que vamos atualizar 
         const indice = observacoes.findIndex((o) => o.id === observacao.id);
         observacoes[indice] = observacao;
     },
@@ -56,10 +59,11 @@ app.get("/lembretes", (req, res) => {
     res.status(200).send(baseConsulta);
 });
 
-// Define uma rota POST para o endpoint '/eventos'.
+//POST /eventos 
+//será acionado pelo barramento de eventos, serve para receber um evento e acessa a base para consulta futura. 
 // Este serviço atua como um "ouvinte" para o Barramento de Eventos (que está em outra porta).
 app.post("/eventos", (req, res) => {
-    try {
+    try { //caso ele receber uma observacaoClassificada, ele simplesmente vai descartar o evento e continuar respondendo (para não quebrar o barramento) 
         funcoes[req.body.tipo](req.body.dados);
     } catch (err) {}
     res.status(200).send({ msg: "ok" });

@@ -10,9 +10,15 @@ const observacoesPorLembreteId = {}; //dicionario de listas
 
 const funcoes = {
   ObservacaoClassificada:(observacao) =>{
+    //const observacoes é uma variavel auxiliar 
+    //observacao.lembreteId = Estou pegando o lembrete ao qual a observação pertence 
+    //const observacoes aponta para coleção de 'observacoes' em que se encontra a 'observação' 
     const observacoes = observacoesPorLembreteId[observacao.lembreteId];
+    //encontrar a observação que queremos atualizar o status 
     const obsParaAtualizar = observacoes.find(o => o.id === observacao.id) //filtra pelo id para saber qual observação ele precisa pegar
+    //fazendo a atualização: o status do obsparaatualizar, recebe o status daquele que chegou via parametro 
     obsParaAtualizar.status = observacao.status;
+    //emitir evento do tipo observacaoatualizada 
     axios.post('http://localhost:10000/eventos',{
       tipo: "ObservacaoAtualizada",
       dados:{
@@ -47,6 +53,7 @@ app.get("/lembretes/:id/observacoes", (req, res) => {
 
 app.post("/eventos", (req, res) => {
   try{ //aqui estamos fazendo o tratamento de erros para o barramento de eventos
+  //chamando a função observação classificada passando como parametro os dados 
   funcoes[req.body.tipo](req.body.dados);
   } catch (err){}
   res.status(200).send({ msg: "ok" });

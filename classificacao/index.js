@@ -6,6 +6,7 @@ const axios = require("axios");
 const palavraChave = "importante";
 const funcoes = {
     ObservacaoCriada:(observacao) =>{
+        //verificar se o texto da observacao contém a palavra chave, trocando o status dela, usando operador ternário obrigatoriamente
         observacao.texto.includes(palavraChave)
         ? "importante"
         : "comum";
@@ -16,6 +17,7 @@ const funcoes = {
     },
 };
 
+//deve ser post e receber requisições no padrão /eventos
 app.post('/eventos', (req, res) => {
     try{
     funcoes[req.body.tipo](req.body.dados);

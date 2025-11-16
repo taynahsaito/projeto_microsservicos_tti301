@@ -25,5 +25,15 @@ app.post('/eventos', (req, res) => {
     res.status(200).send({msg: "ok"});
 })
 
-app.listen(7000, () => console.log("Classificação. Porta 7000"))
-
+//e colocar o servidor para executar na porta 7000
+const port = 7000
+app.listen(port, async () => {
+  console.log(`Classificação. Porta ${port}.`)
+  const resp = await axios.get('http://barramento-de-eventos-service:10000/eventos')
+  resp.data.forEach((valor, indice, colecao) => {
+    try{
+      funcoes[valor.tipo](valor.dados)  
+    }
+    catch(err){}
+  })
+})

@@ -25,7 +25,8 @@ app.post('/eventos', (req, res) => {
     res.status(200).send({msg: "ok"});
 })
 
-//e colocar o servidor para executar na porta 7000
+//tratamento de eventos perdidos quando o mss ficar inoperante
+// colocar o servidor para executar na porta 7000
 const port = 7000
 //quando o serviço parar de ficar inoperante e voltar, é essa função que vai executar
 //async await - forma comum de tratar promises

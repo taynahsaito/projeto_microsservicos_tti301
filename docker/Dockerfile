@@ -16,5 +16,5 @@ COPY . .
 #qual a porta que o conteiner estará disponivel
 EXPOSE 5200
 
-#colocamos o app em execução
+#colocamos o app em execução1
 CMD ["node", "index.js"]

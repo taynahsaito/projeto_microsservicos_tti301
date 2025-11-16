@@ -55,7 +55,7 @@ app.post('/eventos', (req, res) => {
     res.status(200).send({msg: 'ok'});
 });
 
-// Define um endpoint que aceita requisições HTTP do tipo GET.
+//endpoint que devolve a lista de eventos potencialmente perdidos
 app.get('/eventos', (req, res) => {
     // Retorna o array completo de eventos que foram armazenados localmente no Barramento.
     // Isso é útil para verificar o histórico de eventos ou para fins de recuperação em um ambiente de desenvolvimento/teste.

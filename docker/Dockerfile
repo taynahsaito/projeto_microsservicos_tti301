@@ -13,7 +13,9 @@ RUN npm i
 #copia todo o diretorio atual, que é o diretorio onde se encontra o docker file (primeiro ponto) para o diretorio /app de dentro da imagem que estou criando    
 COPY . .
 
-#qual a porta que o conteiner estará disponivel
+#qual a porta que o conteiner estará disponivel:
+#preferimos usar portas que não são comumente usadas por outros serviços
+#temos 16 bits para representar uma porta, 65.535 portas (2¹⁶) para escolher
 EXPOSE 5200
 
 #colocamos o app em execução1
